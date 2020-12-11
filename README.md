@@ -54,7 +54,7 @@ int main()
 }
 ```
 
-效果图片请看screenshots
+效果图片请看samples中各个例子的screenshot文件
 
 
 ## 注意事项

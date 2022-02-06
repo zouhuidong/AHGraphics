@@ -1,13 +1,13 @@
-///////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 //
-//	AHGraphics.h (All HWnd Graphics with EasyX)
-//	by huidong <mailkey@yeah.net>
-//
-//	这个库可以帮助你将EasyX的绘图内容复制到任何窗口上
-//
-//	创建时间：2020.7.8
-//	最后修改：2020.12.11
-//
+//	AHGraphics.h (All HWnd graphics with EasyX)
+//	任意绘制库：可使用 EasyX 在任何窗口上绘制
+// 
+//	作　　者：huidong <huidong_mail@163.com>
+//	版　　本：Ver 2.0
+//	编译环境：VisualStudio 2022 | EasyX_20220116 | Windows 10 
+//	创建日期：2020.07.08
+//	最后修改：2022.01.28
 //
 
 #pragma once
@@ -23,9 +23,9 @@ HDC GetWorkingHDC();
 IMAGE* GetMainImage();
 
 // 将绘制在easyx中的内容显示到目标窗口上
-// img 要显示的绘图对象，默认为主画布
+// pImg 要显示的绘图对象，默认为主画布
 // wnd 目标绘图窗口，默认为主窗口
-void FlushDrawingToWnd(IMAGE* img = NULL, HWND* wnd = NULL);
+void FlushDrawingToWnd(IMAGE* pImg = NULL, HWND wnd = NULL);
 
 // 一直更新绘图内容（堵塞性的）
 //

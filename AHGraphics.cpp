@@ -1,13 +1,8 @@
-///////////////////////////////////////////////////////
+//////////////////////////////
 //
-//	AHGraphics.cpp (All HWnd Graphics with EasyX)
-//	by huidong <mailkey@yeah.net>
-//
-//	这个库可以帮助你将EasyX的绘图内容复制到任何窗口上
-//
-//	创建时间：2020.7.8
-//	最后修改：2020.12.11
-//
+//	AHGraphics.cpp
+//	
+//	详细信息见 AHGraphics.h
 //
 
 #include "AHGraphics.h"
@@ -15,15 +10,15 @@
 //////////////////// 全局变量 ////////////////////
 
 // 内部变量
-// 当前绘图窗口HWND
+// 当前绘图窗口 HWND
 HWND m_wnd = NULL;
 
 // 内部变量
-// 当前绘图HDC
+// 当前绘图 HDC
 HDC m_hdc = NULL;
 
 // 内部变量
-// 当前绘图主IMAGE画布
+// 当前绘图主 IMAGE 画布
 IMAGE m_img;
 
 // 内部变量
@@ -72,7 +67,7 @@ POINT GetWindowSize(HWND wnd)
 //////////////////// 设置参数类函数
 
 // 设置当前绘图目标窗口
-// 请勿直接调用此函数，请使用InitDrawing
+// 请勿直接调用此函数，请使用 InitDrawing
 void SetWorkingHWnd(HWND wnd)
 {
 	m_wnd = wnd;
@@ -86,7 +81,7 @@ HWND GetWorkingHWnd()
 }
 
 // 设置当前绘图目标HDC
-// 请勿直接调用此函数，请使用InitDrawing
+// 请勿直接调用此函数，请使用 InitDrawing
 void SetWorkingHDC(HDC hdc)
 {
 	m_hdc = hdc;
@@ -108,33 +103,36 @@ IMAGE* GetMainImage()
 
 //////////////////// 绘图函数
 
-// 将绘制在easyx中的内容显示到目标窗口上
-// img 要显示的绘图对象，默认为主画布
+// 将绘制在 EasyX 中的内容显示到目标窗口上
+// pImg 要显示的绘图对象，默认为主画布
 // wnd 目标绘图窗口，默认为主窗口
-void FlushDrawingToWnd(IMAGE* img, HWND* wnd)
+void FlushDrawingToWnd(IMAGE* pImg, HWND wnd)
 {
 	HDC me_hdc;
 	HDC img_hdc;
+	HWND hwnd;
 
-	if (img == NULL)
+	if (pImg == NULL)
 	{
 		img_hdc = GetImageHDC(GetMainImage());
 	}
 	else
 	{
-		img_hdc = GetImageHDC(img);
+		img_hdc = GetImageHDC(pImg);
 	}
 
 	if (wnd == NULL)
 	{
 		me_hdc = GetWorkingHDC();
+		hwnd = GetWorkingHWnd();
 	}
 	else
 	{
-		me_hdc = GetDC(*wnd);
+		me_hdc = GetDC(wnd);
+		hwnd = wnd;
 	}
 
-	POINT wnd_size = GetWindowSize(GetWorkingHWnd());
+	POINT wnd_size = GetWindowSize(hwnd);
 
 	BitBlt(
 		me_hdc,			// 目标绘图设备 
@@ -153,7 +151,7 @@ void FlushDrawingToWnd(IMAGE* img, HWND* wnd)
 // 一直更新绘图内容（堵塞性的）
 //
 // delay 每次更新的延时（ms）
-// flag 保持运作的标志，为false时停止
+// flag 保持运作的标志，为 false 时停止
 void KeepFlushDrawing(int delay = 60, bool* flag = &m_isAutoFlush)
 {
 	while (true)
@@ -173,7 +171,7 @@ void KeepFlushDrawing(int delay = 60, bool* flag = &m_isAutoFlush)
 //////////////////// 绘图环境初始化类函数
 
 
-// 使主IMAGE画布大小适应目标绘图窗口大小
+// 使主 IMAGE 画布大小适应目标绘图窗口大小
 void MainImageFitWindow()
 {
 	POINT wnd_size = GetWindowSize(GetWorkingHWnd());
@@ -191,8 +189,8 @@ void InitDrawing(HWND wnd)
 	MainImageFitWindow();
 }
 
-// 对某一HDC绘图前的初始化
-// hdc DC句柄
+// 对某一 HDC 绘图前的初始化
+// hdc DC 句柄
 void InitDrawing(HDC hdc)
 {
 	SetWorkingHDC(hdc);
@@ -201,10 +199,10 @@ void InitDrawing(HDC hdc)
 	MainImageFitWindow();
 }
 
-// 开启 / 关闭 自动输出绘图内容（无需在绘图后手动FlushDrawingToWnd）
+// 开启 / 关闭 自动输出绘图内容（无需在绘图后手动 FlushDrawingToWnd）
 // 注意：除非必要，否则不要开启自动输出绘图内容
 //
-// isAuto 关闭还是开启自动输出，默认为true
+// isAuto 关闭还是开启自动输出，默认为 true
 void AutoFlushDrawing(bool isAuto)
 {
 	if (isAuto)
@@ -232,6 +230,6 @@ void EndDrawing()
 	// 关闭自动输出绘图内容
 	AutoFlushDrawing(false);
 
-	// 无需设置HWND为NULL,因为设置HDC会直接将HWND清空
+	// 无需设置 HWND 为 NULL，因为设置 HDC 会直接将 HWND 清空
 	SetWorkingHDC(NULL);
 }

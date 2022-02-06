@@ -67,5 +67,10 @@ int main()
 `SetWorkingImage(GetMainImage()/* 得到主画布的地址 */);`
 
 
+## 更新日志
+
+**Ver2.0**
+
+修复了 `FlushDrawingToWnd` 函数的 Bug。
 
 

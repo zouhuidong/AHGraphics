@@ -1,4 +1,6 @@
 # AHGraphics
+[![Blog](https://img.shields.io/badge/blog-huidong.xyz-green.svg)](http://huidong.xyz)
+[![EasyX](https://img.shields.io/badge/graphics-EasyX-orange.svg)](https://easyx.cn)
 
 A tool in order to let EasyX lib drawing on all of windows. 用于让 EasyX lib 在所有窗口上绘图的库
 
@@ -6,7 +8,7 @@ A tool in order to let EasyX lib drawing on all of windows. 用于让 EasyX lib 
 
 使用 AHGraphics ，首先include它，然后调用InitDrawing来设置目标绘图HWND或者HDC：
 
-```
+```cpp
 #include "AHGraphics.h"
 #include <conio.h>
  
@@ -27,7 +29,7 @@ int main()
 
 设置了目标绘图窗口，就可以直接使用easyx函数绘图了，例子：
 
-```
+```cpp
 #include "AHGraphics.h"
 #include <conio.h>
  
